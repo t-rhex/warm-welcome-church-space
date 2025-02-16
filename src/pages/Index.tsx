@@ -1,6 +1,6 @@
-
 import { ChevronDown, Clock, MapPin, Heart, BookOpen } from "lucide-react";
 import { useState, useEffect } from "react";
+import Navigation from "../components/Navigation";
 
 const Index = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,6 +11,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-church-50">
+      <Navigation />
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center text-center px-4">
         <div className={`space-y-6 max-w-4xl mx-auto ${isVisible ? 'animate-fadeIn' : 'opacity-0'}`}>
