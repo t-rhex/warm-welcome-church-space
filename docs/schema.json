@@ -1,0 +1,802 @@
+[
+  {
+    "table_name": "announcements",
+    "column_name": "id",
+    "data_type": "uuid",
+    "column_default": "gen_random_uuid()",
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "title",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "content",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "show_in_banner",
+    "data_type": "boolean",
+    "column_default": "false",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "start_date",
+    "data_type": "timestamp with time zone",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "end_date",
+    "data_type": "timestamp with time zone",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "status",
+    "data_type": "text",
+    "column_default": "'draft'::text",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "priority",
+    "data_type": "integer",
+    "column_default": "0",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "link",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "link_text",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "created_by",
+    "data_type": "uuid",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "column_default": "now()",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "announcements",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "column_default": "now()",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "id",
+    "data_type": "uuid",
+    "column_default": "gen_random_uuid()",
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "campaign_id",
+    "data_type": "uuid",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "amount",
+    "data_type": "numeric",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "donor_name",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "donor_email",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "donor_phone",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "message",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "show_amount",
+    "data_type": "boolean",
+    "column_default": "true",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "show_name",
+    "data_type": "boolean",
+    "column_default": "true",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "status",
+    "data_type": "text",
+    "column_default": "'pending'::text",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "payment_method",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "payment_id",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "column_default": "now()",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "completed_at",
+    "data_type": "timestamp with time zone",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "campaign_donations",
+    "column_name": "metadata",
+    "data_type": "jsonb",
+    "column_default": "'{}'::jsonb",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "id",
+    "data_type": "uuid",
+    "column_default": "gen_random_uuid()",
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "title",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "description",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "day_of_week",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "start_time",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "end_time",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "location",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "type",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "is_recurring",
+    "data_type": "boolean",
+    "column_default": "true",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "status",
+    "data_type": "text",
+    "column_default": "'active'::text",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "content_sections",
+    "data_type": "ARRAY",
+    "column_default": "ARRAY[]::jsonb[]",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "meta_tags",
+    "data_type": "ARRAY",
+    "column_default": "ARRAY[]::text[]",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "created_by",
+    "data_type": "uuid",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "last_modified_by",
+    "data_type": "uuid",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "column_default": "now()",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "church_schedules",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "column_default": "now()",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "id",
+    "data_type": "uuid",
+    "column_default": "gen_random_uuid()",
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "first_name",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "last_name",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "email",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "phone",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "address",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "city",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "state",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "zip_code",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "is_first_time",
+    "data_type": "boolean",
+    "column_default": "false",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "how_did_you_hear",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "prayer_request",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "interested_in",
+    "data_type": "ARRAY",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "visit_type",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "preferred_contact",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "status",
+    "data_type": "text",
+    "column_default": "'new'::text",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "assigned_to",
+    "data_type": "uuid",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "column_default": "now()",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "column_default": "now()",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "contacted_at",
+    "data_type": "timestamp with time zone",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "connection_cards",
+    "column_name": "notes",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "id",
+    "data_type": "uuid",
+    "column_default": "gen_random_uuid()",
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "name",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "email",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "subject",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "message",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "status",
+    "data_type": "text",
+    "column_default": "'new'::text",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "assigned_to",
+    "data_type": "uuid",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "column_default": "now()",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "column_default": "now()",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "responded_at",
+    "data_type": "timestamp with time zone",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "response",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "contact_submissions",
+    "column_name": "metadata",
+    "data_type": "jsonb",
+    "column_default": "'{}'::jsonb",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "devotionals",
+    "column_name": "id",
+    "data_type": "uuid",
+    "column_default": "gen_random_uuid()",
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "devotionals",
+    "column_name": "title",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "devotionals",
+    "column_name": "content",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "devotionals",
+    "column_name": "verse_reference",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "devotionals",
+    "column_name": "verse_text",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "devotionals",
+    "column_name": "start_date",
+    "data_type": "timestamp with time zone",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "devotionals",
+    "column_name": "end_date",
+    "data_type": "timestamp with time zone",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "devotionals",
+    "column_name": "status",
+    "data_type": "text",
+    "column_default": "'active'::text",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "devotionals",
+    "column_name": "created_by",
+    "data_type": "uuid",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "devotionals",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "column_default": "now()",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "devotionals",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "column_default": "now()",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "donations",
+    "column_name": "id",
+    "data_type": "uuid",
+    "column_default": "gen_random_uuid()",
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "donations",
+    "column_name": "title",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "donations",
+    "column_name": "description",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "donations",
+    "column_name": "goal_amount",
+    "data_type": "numeric",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "donations",
+    "column_name": "current_amount",
+    "data_type": "numeric",
+    "column_default": "0",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "donations",
+    "column_name": "category",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "donations",
+    "column_name": "requester_name",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "donations",
+    "column_name": "requester_email",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "NO",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "donations",
+    "column_name": "requester_phone",
+    "data_type": "text",
+    "column_default": null,
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "donations",
+    "column_name": "status",
+    "data_type": "text",
+    "column_default": "'pending'::text",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  },
+  {
+    "table_name": "donations",
+    "column_name": "is_public",
+    "data_type": "boolean",
+    "column_default": "false",
+    "is_nullable": "YES",
+    "character_maximum_length": null
+  }
+]
