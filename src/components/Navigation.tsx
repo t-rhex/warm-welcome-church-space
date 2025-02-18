@@ -26,11 +26,11 @@ const Navigation = () => {
 
         // Check for any active streams
         const { data: activeStreams, error } = await supabase
-          .from('live_streams')
-          .select('*')
-          .eq('status', 'live')
-          .lte('start_time', now)
-          .gte('end_time', now)
+          .from("live_streams")
+          .select("*")
+          .eq("status", "live")
+          .lte("start_time", now)
+          .gte("end_time", now)
           .maybeSingle();
 
         if (error) throw error;
@@ -39,11 +39,11 @@ const Navigation = () => {
         // If not live, get next scheduled stream
         if (!activeStreams) {
           const { data: nextStream, error: nextError } = await supabase
-            .from('live_streams')
-            .select('*')
-            .eq('status', 'scheduled')
-            .gt('start_time', now)
-            .order('start_time', { ascending: true })
+            .from("live_streams")
+            .select("*")
+            .eq("status", "scheduled")
+            .gt("start_time", now)
+            .order("start_time", { ascending: true })
             .limit(1)
             .maybeSingle();
 
@@ -55,7 +55,7 @@ const Navigation = () => {
           }
         }
       } catch (error) {
-        console.error('Error checking live status:', error);
+        console.error("Error checking live status:", error);
       }
     };
 
@@ -79,7 +79,9 @@ const Navigation = () => {
       }
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
       let countdownText = "";
@@ -126,12 +128,15 @@ const Navigation = () => {
   }, [location]);
 
   return (
-    <nav className={`fixed top-[var(--banner-height)] left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? "bg-white/90 backdrop-blur-md shadow-sm" : "bg-transparent"
-    }`}>
+    <nav
+      className={`fixed top-[var(--banner-height)] left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white/90 backdrop-blur-md shadow-sm" : "bg-transparent"
+      }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          <Link to="/" className="font-display text-xl md:text-2xl text-church-800">
+          <Link
+            to="/"
+            className="font-display text-xl md:text-2xl text-church-800">
             <div className="flex items-center gap-2">
               Revival Center
               {isLive && (
@@ -148,14 +153,18 @@ const Navigation = () => {
               )}
             </div>
           </Link>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8 relative">
             {/* Primary Navigation */}
-            <Link to="/plan-visit" className="text-church-600 hover:text-church-800 transition-colors">
+            <Link
+              to="/plan-visit"
+              className="text-church-600 hover:text-church-800 transition-colors">
               Plan Your Visit
             </Link>
-            <Link to="/connect" className="text-church-600 hover:text-church-800 transition-colors">
+            <Link
+              to="/connect"
+              className="text-church-600 hover:text-church-800 transition-colors">
               Connect
             </Link>
             <div className="relative group/watch">
@@ -164,194 +173,204 @@ const Navigation = () => {
                 <ChevronDown className="w-4 h-4 transition-transform group-hover/watch:rotate-180" />
               </div>
               <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 invisible opacity-0 group-hover/watch:visible group-hover/watch:opacity-100 transition-all duration-200 z-50">
-                <Link to="/live" className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
+                <Link
+                  to="/live"
+                  className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
                   Live Stream
                 </Link>
-                <Link to="/sermons" className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
+                <Link
+                  to="/sermons"
+                  className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
                   Sermons
                 </Link>
               </div>
             </div>
-            <Link to="/prayer-wall" className="text-church-600 hover:text-church-800 transition-colors">
+            <Link
+              to="/prayer-wall"
+              className="text-church-600 hover:text-church-800 transition-colors">
               Prayer Wall
             </Link>
-            <Link to="/fundraising" className="text-church-600 hover:text-church-800 transition-colors">
+            <Link
+              to="/fundraising"
+              className="text-church-600 hover:text-church-800 transition-colors">
               Fundraising
             </Link>
-            <Button asChild className="bg-church-600 hover:bg-church-700 text-white">
-              <Link to="/give">
-              Give
-              </Link>
-            </Button>
             <div className="relative group/more">
               <div className="flex items-center gap-1 text-church-600 hover:text-church-800 transition-colors cursor-pointer">
                 <span>More</span>
                 <ChevronDown className="w-4 h-4 transition-transform group-hover/more:rotate-180" />
               </div>
               <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 invisible opacity-0 group-hover/more:visible group-hover/more:opacity-100 transition-all duration-200 z-50">
-                <Link to="/blog" className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
-              News
+                <Link
+                  to="/blog"
+                  className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
+                  News
                 </Link>
-                <Link to="/announcements" className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
+                <Link
+                  to="/announcements"
+                  className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
                   Announcements
                 </Link>
-                <Link to="/resources" className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
+                <Link
+                  to="/resources"
+                  className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
                   Resources
                 </Link>
-                <Link to="/ministries" className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
+                <Link
+                  to="/ministries"
+                  className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
                   Ministries
                 </Link>
-                <Link to="/about" className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
+                <Link
+                  to="/about"
+                  className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
                   About
                 </Link>
-                <Link to="/contact" className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
+                <Link
+                  to="/contact"
+                  className="block px-4 py-2 text-church-600 hover:bg-gray-50 transition-colors">
                   Contact
                 </Link>
               </div>
             </div>
             {user && (
-              <Link 
-                to="/dashboard" 
-                className="text-church-600 hover:text-church-800 transition-colors"
-              >
+              <Link
+                to="/dashboard"
+                className="text-church-600 hover:text-church-800 transition-colors">
                 Dashboard
               </Link>
             )}
+            <Button
+              asChild
+              className="bg-church-600 hover:bg-church-700 text-white">
+              <Link to="/give">Give</Link>
+            </Button>
           </div>
 
-          {/* Mobile Menu Button */}
           {/* Mobile Menu Button */}
           <Button
             variant="ghost"
             size="icon"
             className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </Button>
         </div>
 
         {/* Mobile Menu */}
-        <div className={cn(
-          "md:hidden fixed inset-0 top-[calc(5rem+var(--banner-height))] bg-white overflow-y-auto transition-all duration-300",
-          isMenuOpen ? "opacity-100 z-[90]" : "opacity-0 -z-10"
-        )}>
-            <div className="flex flex-col divide-y divide-gray-100 p-4">
-              {/* Primary Navigation */}
-              <div className="py-4 space-y-2">
-              <Link 
-                to="/plan-visit" 
+        <div
+          className={cn(
+            "md:hidden fixed inset-0 top-[calc(5rem+var(--banner-height))] bg-white overflow-y-auto transition-all duration-300",
+            isMenuOpen ? "opacity-100 z-[90]" : "opacity-0 -z-10"
+          )}>
+          <div className="flex flex-col divide-y divide-gray-100 p-4">
+            {/* Primary Navigation */}
+            <div className="py-4 space-y-2">
+              <Link
+                to="/plan-visit"
                 className="flex items-center gap-2 text-church-600 hover:text-church-800 transition-colors p-3 rounded-lg hover:bg-gray-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
+                onClick={() => setIsMenuOpen(false)}>
                 Plan Your Visit
               </Link>
-              <Link 
-                to="/connect" 
+              <Link
+                to="/connect"
                 className="flex items-center gap-2 text-church-600 hover:text-church-800 transition-colors p-3 rounded-lg hover:bg-gray-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
+                onClick={() => setIsMenuOpen(false)}>
                 Connect
               </Link>
               {/* Watch Section */}
               <div className="space-y-2">
-                <div className="font-medium text-sm text-gray-500 p-3">Watch</div>
-                <Link 
-                  to="/live" 
+                <div className="font-medium text-sm text-gray-500 p-3">
+                  Watch
+                </div>
+                <Link
+                  to="/live"
                   className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 pl-6 rounded-lg hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
+                  onClick={() => setIsMenuOpen(false)}>
                   Live Stream
                 </Link>
-                <Link 
-                  to="/sermons" 
+                <Link
+                  to="/sermons"
                   className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 pl-6 rounded-lg hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
+                  onClick={() => setIsMenuOpen(false)}>
                   Sermons
                 </Link>
               </div>
-              <Link 
-                to="/prayer-wall" 
+              <Link
+                to="/prayer-wall"
                 className="flex items-center gap-2 text-church-600 hover:text-church-800 transition-colors p-3 rounded-lg hover:bg-gray-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
+                onClick={() => setIsMenuOpen(false)}>
                 Prayer Wall
               </Link>
-              <Link 
-                to="/fundraising" 
+              <Link
+                to="/fundraising"
                 className="flex items-center gap-2 text-church-600 hover:text-church-800 transition-colors p-3 rounded-lg hover:bg-gray-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
+                onClick={() => setIsMenuOpen(false)}>
                 Fundraising
               </Link>
-              <Button 
-                asChild 
-                className="w-full bg-church-600 hover:bg-church-700 text-white mt-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-              <Link to="/give" className="flex items-center gap-2">
-                Give
-              </Link>
-              </Button>
-              </div>
-              
-              {/* Secondary Navigation */}
-              <div className="py-4 space-y-2">
-                <div className="font-medium text-sm text-gray-500 p-3">More</div>
-                <Link 
-                  to="/blog" 
-                  className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  News
-                </Link>
-                <Link 
-                  to="/announcements" 
-                  className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Announcements
-                </Link>
-                <Link 
-                  to="/resources" 
-                  className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Resources
-                </Link>
-                <Link 
-                  to="/ministries" 
-                  className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Ministries
-                </Link>
-                <Link 
-                  to="/about" 
-                  className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  About
-                </Link>
-                <Link 
-                  to="/contact" 
-                  className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Contact
-                </Link>
-                {user && (
-                  <Link 
-                    to="/dashboard" 
-                    className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Dashboard
-                  </Link>
-                )}
-              </div>
             </div>
+
+            {/* Secondary Navigation */}
+            <div className="py-4 space-y-2">
+              <div className="font-medium text-sm text-gray-500 p-3">More</div>
+              <Link
+                to="/blog"
+                className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}>
+                News
+              </Link>
+              <Link
+                to="/announcements"
+                className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}>
+                Announcements
+              </Link>
+              <Link
+                to="/resources"
+                className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}>
+                Resources
+              </Link>
+              <Link
+                to="/ministries"
+                className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}>
+                Ministries
+              </Link>
+              <Link
+                to="/about"
+                className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}>
+                About
+              </Link>
+              <Link
+                to="/contact"
+                className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}>
+                Contact
+              </Link>
+              {user && (
+                <Link
+                  to="/dashboard"
+                  className="flex items-center gap-2 text-church-600 hover:text-church-800 p-3 rounded-lg hover:bg-gray-50"
+                  onClick={() => setIsMenuOpen(false)}>
+                  Dashboard
+                </Link>
+              )}
+              <Button
+                asChild
+                className="w-full bg-church-600 hover:bg-church-700 text-white mt-4"
+                onClick={() => setIsMenuOpen(false)}>
+                <Link to="/give" className="flex items-center gap-2">
+                  Give
+                </Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

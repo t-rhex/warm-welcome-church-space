@@ -6,31 +6,56 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { toast } from "@/components/ui/use-toast";
 
+// Add these type definitions at the top of the file
+interface Window {
+  FB: any;
+  fbAsyncInit: () => void;
+}
+
+interface LiveStreamData {
+  id: string;
+  title: string;
+  description?: string;
+  start_time: string;
+  end_time: string;
+  status: "live" | "scheduled" | "ended";
+  platform: "youtube" | "facebook";
+  youtube_url?: string;
+  facebook_url?: string;
+}
+
 // Facebook SDK initialization
 const initFacebookSDK = () => {
-  if (window.FB) return;
-  
-  window.fbAsyncInit = function() {
-    window.FB.init({
+  if ((window as any).FB) return;
+
+  (window as any).fbAsyncInit = function () {
+    (window as any).FB.init({
       xfbml: true,
-      version: 'v19.0'
+      version: "v19.0",
     });
   };
 
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
+  (function (d: Document, s: string, id: string) {
+    var js,
+      fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+    js = d.createElement(s);
+    if (js && fjs && fjs.parentNode) {
+      js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }
+  })(document, "script", "facebook-jssdk");
 };
 
 const LiveStream = () => {
-  const [currentStream, setCurrentStream] = useState(null);
-  const [nextStream, setNextStream] = useState(null);
+  const [currentStream, setCurrentStream] = useState<LiveStreamData | null>(
+    null
+  );
+  const [nextStream, setNextStream] = useState<LiveStreamData | null>(null);
   const [loading, setLoading] = useState(true);
   const [countdown, setCountdown] = useState("");
+  const [streams, setStreams] = useState<LiveStreamData[]>([]);
 
   useEffect(() => {
     initFacebookSDK();
@@ -47,35 +72,47 @@ const LiveStream = () => {
 
       // Get current live stream
       const { data: liveStream, error: liveError } = await supabase
-        .from('live_streams')
-        .select('*')
-        .eq('status', 'live')
-        .lte('start_time', now)
-        .gte('end_time', now)
+        .from("live_streams")
+        .select("*")
+        .eq("status", "live")
+        .lte("start_time", now)
+        .gte("end_time", now)
         .maybeSingle();
 
       if (liveError) throw liveError;
-      setCurrentStream(liveStream);
+      setCurrentStream(liveStream as LiveStreamData);
 
       // If no live stream, get next scheduled stream
       if (!liveStream) {
         const { data: nextStream, error: nextError } = await supabase
-          .from('live_streams')
-          .select('*')
-          .eq('status', 'scheduled')
-          .gt('start_time', now)
-          .order('start_time', { ascending: true })
+          .from("live_streams")
+          .select("*")
+          .eq("status", "scheduled")
+          .gt("start_time", now)
+          .order("start_time", { ascending: true })
           .limit(1)
           .maybeSingle();
 
         if (nextError) throw nextError;
-        setNextStream(nextStream);
+        setNextStream(nextStream as LiveStreamData);
       }
+
+      // Get all scheduled streams
+      const { data: scheduledStreams, error: scheduledError } = await supabase
+        .from("live_streams")
+        .select("*")
+        .eq("status", "scheduled")
+        .gt("start_time", now)
+        .order("start_time", { ascending: true });
+
+      if (scheduledError) throw scheduledError;
+      setStreams(scheduledStreams as LiveStreamData[]);
     } catch (error) {
-      console.error('Error fetching stream data:', error);
+      console.error("Error fetching stream data:", error);
       toast({
         title: "Error fetching stream data",
-        description: error.message,
+        description:
+          error instanceof Error ? error.message : "An error occurred",
         variant: "destructive",
       });
     } finally {
@@ -98,7 +135,9 @@ const LiveStream = () => {
       }
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
@@ -125,8 +164,12 @@ const LiveStream = () => {
                   </span>
                   Live Now
                 </div>
-                <h1 className="text-4xl md:text-5xl font-display text-church-900 mb-4">{currentStream.title}</h1>
-                <p className="text-xl text-church-600">Join us for worship from wherever you are</p>
+                <h1 className="text-4xl md:text-5xl font-display text-church-900 mb-4">
+                  {currentStream.title}
+                </h1>
+                <p className="text-xl text-church-600">
+                  Join us for worship from wherever you are
+                </p>
               </>
             ) : nextStream ? (
               <>
@@ -134,15 +177,20 @@ const LiveStream = () => {
                   <Clock className="w-4 h-4" />
                   Starting in {countdown}
                 </div>
-                <h1 className="text-4xl md:text-5xl font-display text-church-900 mb-4">{nextStream.title}</h1>
+                <h1 className="text-4xl md:text-5xl font-display text-church-900 mb-4">
+                  {nextStream.title}
+                </h1>
                 <p className="text-xl text-church-600">
-                  Join us on {new Date(nextStream.start_time).toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    month: 'long',
-                    day: 'numeric'
-                  })} at {new Date(nextStream.start_time).toLocaleTimeString('en-US', {
-                    hour: 'numeric',
-                    minute: '2-digit'
+                  Join us on{" "}
+                  {new Date(nextStream.start_time).toLocaleDateString("en-US", {
+                    weekday: "long",
+                    month: "long",
+                    day: "numeric",
+                  })}{" "}
+                  at{" "}
+                  {new Date(nextStream.start_time).toLocaleTimeString("en-US", {
+                    hour: "numeric",
+                    minute: "2-digit",
                   })}
                 </p>
               </>
@@ -152,8 +200,12 @@ const LiveStream = () => {
                   <AlertCircle className="w-4 h-4" />
                   No Streams Scheduled
                 </div>
-                <h1 className="text-4xl md:text-5xl font-display text-church-900 mb-4">Live Stream</h1>
-                <p className="text-xl text-church-600">Check back later for our next live stream</p>
+                <h1 className="text-4xl md:text-5xl font-display text-church-900 mb-4">
+                  Live Stream
+                </h1>
+                <p className="text-xl text-church-600">
+                  Check back later for our next live stream
+                </p>
               </>
             )}
           </div>
@@ -165,19 +217,24 @@ const LiveStream = () => {
                 <CardContent className="p-0">
                   <div className="aspect-video bg-church-900 relative overflow-hidden">
                     {currentStream ? (
-                      <div 
-                        className="fb-video" 
-                        data-href={currentStream.platform === 'youtube' ? currentStream.youtube_url : currentStream.facebook_url}
+                      <div
+                        className="fb-video"
+                        data-href={
+                          currentStream.platform === "youtube"
+                            ? currentStream.youtube_url
+                            : currentStream.facebook_url
+                        }
                         data-width="100%"
-                        data-show-text="false"
-                      ></div>
+                        data-show-text="false"></div>
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center text-white">
                         {nextStream ? (
                           <div className="text-center">
                             <h3 className="text-xl mb-2">Next Stream</h3>
                             <p className="text-lg mb-4">{nextStream.title}</p>
-                            <div className="text-2xl font-bold">{countdown}</div>
+                            <div className="text-2xl font-bold">
+                              {countdown}
+                            </div>
                           </div>
                         ) : (
                           <p>No upcoming streams scheduled</p>
@@ -212,20 +269,26 @@ const LiveStream = () => {
                     <>
                       <div className="flex items-center gap-3 text-church-600">
                         <Calendar className="w-5 h-5" />
-                        <span>{new Date(currentStream.start_time).toLocaleDateString('en-US', {
-                          weekday: 'long',
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
-                        })}</span>
+                        <span>
+                          {new Date(
+                            currentStream.start_time
+                          ).toLocaleDateString("en-US", {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </span>
                       </div>
                       <div className="flex items-center gap-3 text-church-600">
                         <Clock className="w-5 h-5" />
                         <span>
-                          {new Date(currentStream.start_time).toLocaleTimeString('en-US', {
-                            hour: 'numeric',
-                            minute: '2-digit',
-                            timeZoneName: 'short'
+                          {new Date(
+                            currentStream.start_time
+                          ).toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "2-digit",
+                            timeZoneName: "short",
                           })}
                         </span>
                       </div>
@@ -242,26 +305,34 @@ const LiveStream = () => {
                       <div className="flex items-center gap-3 text-church-600">
                         <Calendar className="w-5 h-5" />
                         <span>
-                          {new Date(nextStream.start_time).toLocaleDateString('en-US', {
-                            weekday: 'long',
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                          })}
+                          {new Date(nextStream.start_time).toLocaleDateString(
+                            "en-US",
+                            {
+                              weekday: "long",
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            }
+                          )}
                         </span>
                       </div>
                       <div className="flex items-center gap-3 text-church-600">
                         <Clock className="w-5 h-5" />
                         <span>
-                          {new Date(nextStream.start_time).toLocaleTimeString('en-US', {
-                            hour: 'numeric',
-                            minute: '2-digit',
-                            timeZoneName: 'short'
-                          })}
+                          {new Date(nextStream.start_time).toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "numeric",
+                              minute: "2-digit",
+                              timeZoneName: "short",
+                            }
+                          )}
                         </span>
                       </div>
                       <div className="mt-4 p-4 bg-church-50 rounded-lg">
-                        <h4 className="font-medium text-church-800 mb-2">Next Stream</h4>
+                        <h4 className="font-medium text-church-800 mb-2">
+                          Next Stream
+                        </h4>
                         <div className="text-2xl font-bold text-church-600 mb-2">
                           {countdown}
                         </div>
@@ -287,27 +358,44 @@ const LiveStream = () => {
                 <CardContent className="space-y-4">
                   {loading ? (
                     <div className="text-center py-4">Loading...</div>
-                  ) : streams.filter(s => s.status === 'scheduled').length === 0 ? (
+                  ) : streams.filter((s) => s.status === "scheduled").length ===
+                    0 ? (
                     <div className="text-center py-4 text-church-600">
                       No upcoming streams scheduled
                     </div>
                   ) : (
                     streams
-                      .filter(s => s.status === 'scheduled')
-                      .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())
+                      .filter((s) => s.status === "scheduled")
+                      .sort(
+                        (a, b) =>
+                          new Date(a.start_time).getTime() -
+                          new Date(b.start_time).getTime()
+                      )
                       .slice(0, 3)
-                      .map(stream => (
-                        <div key={stream.id} className="p-3 rounded-lg bg-church-50">
-                          <p className="font-medium text-church-800">{stream.title}</p>
+                      .map((stream) => (
+                        <div
+                          key={stream.id}
+                          className="p-3 rounded-lg bg-church-50">
+                          <p className="font-medium text-church-800">
+                            {stream.title}
+                          </p>
                           <p className="text-sm text-church-600">
-                            {new Date(stream.start_time).toLocaleDateString('en-US', {
-                              month: 'long',
-                              day: 'numeric',
-                              year: 'numeric'
-                            })} • {new Date(stream.start_time).toLocaleTimeString('en-US', {
-                              hour: 'numeric',
-                              minute: '2-digit'
-                            })}
+                            {new Date(stream.start_time).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )}{" "}
+                            •{" "}
+                            {new Date(stream.start_time).toLocaleTimeString(
+                              "en-US",
+                              {
+                                hour: "numeric",
+                                minute: "2-digit",
+                              }
+                            )}
                           </p>
                         </div>
                       ))
@@ -321,7 +409,8 @@ const LiveStream = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-church-600 mb-4">
-                    Our prayer team is available to pray with you during the service.
+                    Our prayer team is available to pray with you during the
+                    service.
                   </p>
                   <Button className="w-full bg-church-600 hover:bg-church-700">
                     Request Prayer

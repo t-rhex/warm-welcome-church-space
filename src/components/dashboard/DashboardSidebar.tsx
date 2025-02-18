@@ -18,6 +18,7 @@ import {
   DollarSign,
   Calculator,
   Video,
+  Folder,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -56,6 +57,7 @@ const menuItems: MenuItem[] = [
   { path: "contact", icon: Mail, label: "Contact Messages" },
   { path: "fundraising", icon: DollarSign, label: "Fundraising" },
   { path: "meetings", icon: Users, label: "Meetings" },
+  { path: "resources", icon: Folder, label: "Resources" },
   { path: "reports", icon: FileText, label: "Reports" },
   { path: "settings", icon: Settings, label: "Settings" },
 ];

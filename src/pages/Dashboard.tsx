@@ -24,6 +24,7 @@ import NewsletterManagement from "@/components/dashboard/NewsletterManagement";
 import ConnectionCards from "@/components/dashboard/ConnectionCards";
 import Reports from "@/components/dashboard/Reports";
 import SettingsPanel from "@/components/dashboard/SettingsPanel";
+import ResourceManagement from "@/components/dashboard/ResourceManagement";
 import { cn } from "@/lib/utils";
 
 const Dashboard = () => {
@@ -107,6 +108,7 @@ const Dashboard = () => {
               <Route path="connection-cards" element={<ConnectionCards />} />
               <Route path="reports" element={<Reports />} />
               <Route path="settings" element={<SettingsPanel />} />
+              <Route path="resources" element={<ResourceManagement />} />
             </Routes>
           </div>
         </main>
